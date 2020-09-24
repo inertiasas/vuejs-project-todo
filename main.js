@@ -13,7 +13,7 @@ Vue.component('task-list', {
     }
   },
   computed: {
-    incomplete() {
+    taskNumber() {
       return this.tasksFiltered.length;
     },
     tasksFiltered() {

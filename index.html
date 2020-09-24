@@ -4,7 +4,7 @@
 	<title>To Do List</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/sketchy/bootstrap.min.css" integrity="sha384-RxqHG2ilm4r6aFRpGmBbGTjsqwfqHOKy1ArsMhHusnRO47jcGqpIQqlQK/kmGy9R" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
@@ -14,28 +14,28 @@
 
 	<script type="text/html" id="task-list">
 		<section class="tasks">
-		<div class="container">
+		<div class="container jumbotron">
 			<div class="row">
-				<h1>Tasks <transition name="fade"> <small v-if="incomplete">({{ incomplete }})</small></transition></h1>
+				<h2>To Do</h2>
 			</div>
 			<div class="row">
-				<div class="input-group">
-					<select v-model="filter" class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-						<option value="all">All Tasks</option>
-						<option value="progress">In Progress Tasks</option>
-						<option value="complete">Completed Tasks</option>
-					</select>
 
-					<div class="dropdown">
-						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Clear
-						</button>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" @click="clearCompleted"><i class="fa fa-check"></i>Clear Completed</a>
-							<a class="dropdown-item" @click="clearAll"><i class="fa fa-trash"></i>Clear All</a>
-						</div>
-					</div>
-				</div>
+				<ul class="nav nav-pills">
+					 <li class="nav-item">
+    				  	<select v-model="filter" class="custom-select">
+    				  		<option value="all">All Task</option>
+    				  		<option value="progress">In Progress Tasks</option>
+    				  		<option value="complete">Completed Tasks</option>
+    				  	</select>
+    				  </li>
+    				  <li class="nav-item dropdown">
+    				  	<a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Clear</a>
+    				  	<div class="dropdown-menu" style="">
+    				  		<a @click="clearCompleted" class="dropdown-item"><i class="fa fa-check"></i> Clear Completed</a>
+    				  		<a @click="clearAll" class="dropdown-item"><i class="fa fa-trash"></i> Clear All</a>
+    				  	</div>
+    				  </li>
+    				</ul>
 			</div>
 			<div class="row">
 
@@ -62,24 +62,34 @@
 					</li>
 				</ul>
 			</div>
+
+			<div class="row">
+				<p>Tasks: <span v-if="taskNumber">{{taskNumber}}</span></p>
+			</div>
 		</div>
 		</section>
 	</script>
 	<script type="text/html" id="task-item">
 		<li class="list-group-item">
-			<div class="input-group">
-				<input v-model='task.title' type="text" class="form-control" :class="className" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
-				<div class="input-group-append">
-					<div class="btn-group" role="group">
-						<div class="input-group-text">
-							<input type="checkbox" v-model='task.completed' aria-label="Radio button for following text input">
-						</div>
-						<button class="btn btn-danger" type="button" @click="$emit('remove')">
-						<i class="fa fa-times"></i>
-					</button>
+			<div class="row">
+				<div col-sm>
+					<div class="form-check">
+						<label class="form-check-label">
+							<input v-model='task.completed' class="form-check-input" type="checkbox">
+						</label>
 					</div>
 				</div>
+				<div col-sm>
+					<input v-model='task.title' type="text" class="form-control" :class="className" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+				</div>
+				<div col-sm>
+					<button class="btn" type="button" @click="$emit('remove')">
+							<i class="fa fa-trash"></i>
+						</button>
+				</div>
 			</div>
+
+						
 		</li>
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
