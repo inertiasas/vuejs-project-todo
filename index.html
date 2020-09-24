@@ -19,14 +19,22 @@
 				<h1>Tasks <transition name="fade"> <small v-if="incomplete">({{ incomplete }})</small></transition></h1>
 			</div>
 			<div class="row">
-				<div class="btn-group mr-2" role="group">
-					<button class="btn btn-secondary" @click="clearCompleted">
-						<i class="fa fa-check"></i> Clear Completed
-					</button>
-					<button class="btn btn-secondary" click="clearAll">
-						<i class="fa fa-trash"></i> 
-						Clear All
-					</button>
+				<div class="input-group">
+					<select v-model="filter" class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+						<option value="all">All Tasks</option>
+						<option value="progress">In Progress Tasks</option>
+						<option value="complete">Completed Tasks</option>
+					</select>
+
+					<div class="dropdown">
+						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Clear
+						</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" @click="clearCompleted"><i class="fa fa-check"></i>Clear Completed</a>
+							<a class="dropdown-item" @click="clearAll"><i class="fa fa-trash"></i>Clear All</a>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="row">
@@ -34,7 +42,7 @@
 			</div>
 			<div class="row">
 				<ul class="list-group">
-					<task-item v-for="(task, index) in tasks" @remove="removeTask(index)" @complete="completeTask(task)" :task="task" :key="task"></task-item>
+					<task-item v-for="(task, index) in tasksFiltered" @remove="removeTask(index)" @complete="completeTask(task)" :task="task" :key="task.id"></task-item>
 					<li class="list-group-item">
 						<div class="input-group mb-3">
 							<input
@@ -60,7 +68,7 @@
 	<script type="text/html" id="task-item">
 		<li class="list-group-item">
 			<div class="input-group">
-				<input v-model='task.title' type="text" class="form-control border-primary" :class="className" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+				<input v-model='task.title' type="text" class="form-control" :class="className" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
 				<div class="input-group-append">
 					<div class="btn-group" role="group">
 						<div class="input-group-text">
@@ -76,5 +84,8 @@
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="main.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 </html>

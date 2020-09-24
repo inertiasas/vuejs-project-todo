@@ -1,3 +1,6 @@
+
+let uuid = 2;
+
 Vue.component('task-list', {
   template: '#task-list',
   props: {
@@ -5,22 +8,36 @@ Vue.component('task-list', {
   },
   data() {
     return {
-      newTask: ''
-    };
+      newTask: '',
+      filter: 'all'
+    }
   },
   computed: {
     incomplete() {
-      return this.tasks.filter(this.inProgress).length;
+      return this.tasksFiltered.length;
+    },
+    tasksFiltered() {
+    	if (this.filter == 'progress'){
+    		return this.tasks.filter(this.inProgress);
+    	}
+    	else if (this.filter == 'complete'){
+    		return this.tasks.filter(this.isCompleted);
+    	}
+    	else{
+    		return this.tasks;
+    	}
     }
   },
   methods: {
     addTask() {
       if (this.newTask) {
         this.tasks.push({
-          title: this.newTask,
-          completed: false
+        	id: uuid,
+        	title: this.newTask,
+        	completed: false,
         });
         this.newTask = '';
+        uuid += 1;
       }
     },
     completeTask(task) {
@@ -64,10 +81,12 @@ new Vue({
   data: {
     tasks: [
       {
+      	id: 0,
         title: 'Make todo list',
         completed: true
       },
       {
+      	id: 1,
         title: 'Go skydiving',
         completed: false
       }
